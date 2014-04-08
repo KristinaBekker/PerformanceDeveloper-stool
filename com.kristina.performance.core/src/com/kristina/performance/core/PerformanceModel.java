@@ -2,7 +2,6 @@ package com.kristina.performance.core;
 
 import java.util.Calendar;
 
-import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 

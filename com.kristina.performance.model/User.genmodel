@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/com.kristina.performance.model/src" modelPluginID="com.kristina.performance.model"
+    modelName="User" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>User.ecore</foreignModel>
+  <genPackages prefix="UserPerformance" disposableProviderFactory="true" ecorePackage="User.ecore#/">
+    <genClasses ecoreClass="User.ecore#//User">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference User.ecore#//User/tasks"/>
+    </genClasses>
+    <genClasses ecoreClass="User.ecore#//Task">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Task/identifier"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Task/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Task/status"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Task/dateStart"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Task/dateEnd"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Task/currentDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Task/intervals"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Task/subtasks"/>
+    </genClasses>
+    <genClasses ecoreClass="User.ecore#//Configuration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Configuration/identifier"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Configuration/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Configuration/countSuccessfulLaunching"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Configuration/countUnsuccessfulLaunching"/>
+    </genClasses>
+    <genClasses ecoreClass="User.ecore#//Paremeters">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/timePassive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/timeActive"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/typingSpeed"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/numberOfCharacters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/countSvedEditing"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/numberOfSwitches"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/countSaveEditing"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/errorsCount"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/timeToCorrectionErrors"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/typoCount"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/CountSucsessefulLaunch"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Paremeters/CountUnsucsessfulLaunch"/>
+    </genClasses>
+    <genClasses ecoreClass="User.ecore#//Interval">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Interval/start"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute User.ecore#//Interval/end"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference User.ecore#//Interval/parameter"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <requires>
+        <import plugin="org.eclipse.core.boot"/>
+        <import plugin="org.eclipse.core.runtime"/>
+        <import plugin="org.eclipse.core.resources"/>
+        <import plugin="org.eclipse.swt"/>
+        <import plugin="org.eclipse.ui"/>
+   </requires>
+
+   <runtime>
+        <library name="views.jar"/>
+   </runtime>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="com.kristina.performance.ui.PerformanceView"
+            id="com.kristina.performance.ui.performanceView"
+            name="Performance View"
+            restorable="true">
+      </view>
+   </extension>
+
+</plugin>
