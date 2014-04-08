@@ -32,6 +32,8 @@ import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
@@ -98,23 +100,24 @@ public class PerformanceView extends ViewPart {
 
 	public void createPartControl(Composite parent) {
 
-		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(parent);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(parent);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(parent);
 		TabFolder composite = new TabFolder(parent, SWT.NONE);
-		GridLayoutFactory.fillDefaults().numColumns(2).applyTo(composite);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(composite);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
 		TabItem mainTab = new TabItem (composite, SWT.NULL);
 		 mainTab.setText ("Main" );
 		 TabItem byDateTab = new TabItem(composite, SWT.NULL);
 		 byDateTab.setText("By date");
 		 Composite mainTabControl  = new Composite(composite, SWT.NONE);
-		 GridLayoutFactory.fillDefaults().numColumns(2).applyTo(mainTabControl);
+		 GridLayoutFactory.fillDefaults().numColumns(1).applyTo(mainTabControl);
 			GridDataFactory.fillDefaults().grab(true, true).applyTo(mainTabControl);
 		mainTab.setControl(mainTabControl  );
 		
 		
-		createViewer(mainTabControl);
 		createButtons(mainTabControl);
+		createViewer(mainTabControl);
+		
 		createActions();
 		createModelListener();
 	
@@ -626,8 +629,30 @@ public class PerformanceView extends ViewPart {
 						new PerfomanceTreeFactoryImpl(), null));
 
 		performanceTreeViewer.setInput(performance);
+		PerformanceModel.getInstance().r.add(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+			performanceTreeViewer.getControl().getDisplay().syncExec(new Runnable() {
+				
+				@Override
+				public void run() {
+					performanceTreeViewer.refresh();
+					
+				}
+			});	
+			}
+		});
 	//	item.setControl(composite);
-
+performanceTreeViewer.getControl().addDisposeListener(new DisposeListener() {
+	
+	@Override
+	public void widgetDisposed(DisposeEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+});
 	}
 
 	private void createTask(String name, String description) {
@@ -674,11 +699,12 @@ public class PerformanceView extends ViewPart {
 
 	private void createButtons(Composite parent) {
 		Composite compositeWithButtons = new Composite(parent, SWT.NONE);
-		GridDataFactory.fillDefaults().grab(false, true)
+		GridDataFactory.fillDefaults().grab(false, false)
 				.applyTo(compositeWithButtons);
-		GridLayoutFactory.swtDefaults().numColumns(1)
+		GridLayoutFactory.swtDefaults().numColumns(5)
 				.applyTo(compositeWithButtons);
-		Button add = createPushButton(compositeWithButtons, null, null);
+//		Button add = createPushButton(compositeWithButtons, null, null);
+		Button add = new Button(compositeWithButtons, SWT.PUSH);
 		add.setText("Add");
 		add.addSelectionListener(new SelectionListener() {
 
@@ -702,7 +728,8 @@ public class PerformanceView extends ViewPart {
 
 			}
 		});
-		removeButton = createPushButton(compositeWithButtons, null, null);
+//		removeButton = createPushButton(compositeWithButtons, null, null);
+		removeButton = new Button(compositeWithButtons, SWT.PUSH);
 		removeButton.setText("Remove");
 		removeButton.addSelectionListener(new SelectionListener() {
 
@@ -718,7 +745,8 @@ public class PerformanceView extends ViewPart {
 
 			}
 		});
-		upButton = createPushButton(compositeWithButtons, null, null);
+//		upButton = createPushButton(compositeWithButtons, null, null);
+		upButton = new Button(compositeWithButtons, SWT.PUSH);
 		upButton.setText("Up");
 		upButton.addSelectionListener(new SelectionListener() {
 
@@ -733,7 +761,8 @@ public class PerformanceView extends ViewPart {
 
 			}
 		});
-		downButton = createPushButton(compositeWithButtons, null, null);
+//		downButton = createPushButton(compositeWithButtons, null, null);
+		downButton  = new Button(compositeWithButtons, SWT.PUSH);
 		downButton.setText("Down");
 		downButton.addSelectionListener(new SelectionListener() {
 
@@ -749,7 +778,8 @@ public class PerformanceView extends ViewPart {
 
 			}
 		});
-		moreButton = createPushButton(compositeWithButtons, null, null);
+//		moreButton = createPushButton(compositeWithButtons, null, null);
+		moreButton = new Button(compositeWithButtons, SWT.PUSH);
 		moreButton.setText("About");
 		moreButton.addSelectionListener(new SelectionListener() {
 
