@@ -114,7 +114,7 @@ public class PerformanceCore {
 		Date now = Calendar.getInstance().getTime();
 		long during = (now.getTime() - currentTimeInterval.getTime()) / 60000;
 		long during2 = (now.getTime() - startTimeInterval.getTime()) / 60000;
-		if (during > 0 || during2 > 0) {
+		if (during < 5 || during2 < 5) {
 
 			addInterval(user);
 			startTimeInterval = now;
@@ -126,36 +126,39 @@ public class PerformanceCore {
 	}
 
 	private void addInterval(User user) {
-		name = "common";
-		long during = (currentTimeInterval.getTime() - startTimeInterval
-				.getTime()) / 60000;
-		if (!user.getTasks().isEmpty()) {
-			for (Task task : user.getTasks()) {
-				if (task.getStatus().equals(START)) {
-					task.getParameters().setTimeActive(
-							task.getParameters().getTimeActive() + during);
-					name = task.getName();
-					break;
-				}
-				for (Task subtask : task.getSubtasks()) {
-
-					if (subtask.getStatus().equals(START)) {
-						subtask.getParameters().setTimeActive(
-								subtask.getParameters().getTimeActive()
-										+ during);
-						name = subtask.getName();
-						break;
-					}
-				}
-			}
-		}
-			user.getParameters().setTimeActive(
-					user.getParameters().getTimeActive() + during);
-			interval.getParameter().setTimeActive(during);
-			interval.setNameTask(name);
-			interval.setEnd(currentTimeInterval);
-			interval.setStart(startTimeInterval);
-			user.getIntervals().add(interval);
+		
+//		name = "common";
+//		long during = (currentTimeInterval.getTime() - startTimeInterval
+//				.getTime()) / 60000;
+//		if (!user.getTasks().isEmpty()) {
+//			for (Task task : user.getTasks()) {
+//				if (task.getStatus().equals(START)) {
+//					task.getParameters().setTimeActive(
+//							task.getParameters().getTimeActive() + during);
+//					name = task.getName();
+//					
+//				}
+//				for (Task subtask : task.getSubtasks()) {
+//
+//					if (subtask.getStatus().equals(START)) {
+//						subtask.getParameters().setTimeActive(
+//								subtask.getParameters().getTimeActive()
+//										+ during +400);
+//						subtask.getParameters().setTimeActive(
+//						subtask.getParameters().getTimeActive() + during);
+//						name = subtask.getName();
+//						
+//					}
+//				}
+//			}
+//		}
+//			user.getParameters().setTimeActive(
+//					user.getParameters().getTimeActive() + during +400);
+//			interval.getParameter().setTimeActive(during);
+//			interval.setNameTask(name);
+//			interval.setEnd(currentTimeInterval);
+//			interval.setStart(startTimeInterval);
+//			user.getIntervals().add(interval);
 		
 	}
 

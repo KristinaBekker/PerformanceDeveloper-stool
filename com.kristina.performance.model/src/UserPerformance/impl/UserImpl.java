@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link UserPerformance.impl.UserImpl#getTasks <em>Tasks</em>}</li>
  *   <li>{@link UserPerformance.impl.UserImpl#getName <em>Name</em>}</li>
- *   <li>{@link UserPerformance.impl.UserImpl#isStatus <em>Status</em>}</li>
  *   <li>{@link UserPerformance.impl.UserImpl#getDateStart <em>Date Start</em>}</li>
  *   <li>{@link UserPerformance.impl.UserImpl#getDateEnd <em>Date End</em>}</li>
  *   <li>{@link UserPerformance.impl.UserImpl#getCurrentDate <em>Current Date</em>}</li>
@@ -75,26 +74,6 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 	 * @ordered
 	 */
 	protected String name = NAME_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #isStatus() <em>Status</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isStatus()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean STATUS_EDEFAULT = false;
-
-	/**
-	 * The cached value of the '{@link #isStatus() <em>Status</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isStatus()
-	 * @generated
-	 * @ordered
-	 */
-	protected boolean status = STATUS_EDEFAULT;
 
 	/**
 	 * The default value of the '{@link #getDateStart() <em>Date Start</em>}' attribute.
@@ -226,27 +205,6 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 		name = newName;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, UserPerformancePackage.USER__NAME, oldName, name));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean isStatus() {
-		return status;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setStatus(boolean newStatus) {
-		boolean oldStatus = status;
-		status = newStatus;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UserPerformancePackage.USER__STATUS, oldStatus, status));
 	}
 
 	/**
@@ -397,8 +355,6 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 				return getTasks();
 			case UserPerformancePackage.USER__NAME:
 				return getName();
-			case UserPerformancePackage.USER__STATUS:
-				return isStatus();
 			case UserPerformancePackage.USER__DATE_START:
 				return getDateStart();
 			case UserPerformancePackage.USER__DATE_END:
@@ -428,9 +384,6 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 				return;
 			case UserPerformancePackage.USER__NAME:
 				setName((String)newValue);
-				return;
-			case UserPerformancePackage.USER__STATUS:
-				setStatus((Boolean)newValue);
 				return;
 			case UserPerformancePackage.USER__DATE_START:
 				setDateStart((Date)newValue);
@@ -466,9 +419,6 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 			case UserPerformancePackage.USER__NAME:
 				setName(NAME_EDEFAULT);
 				return;
-			case UserPerformancePackage.USER__STATUS:
-				setStatus(STATUS_EDEFAULT);
-				return;
 			case UserPerformancePackage.USER__DATE_START:
 				setDateStart(DATE_START_EDEFAULT);
 				return;
@@ -500,8 +450,6 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 				return tasks != null && !tasks.isEmpty();
 			case UserPerformancePackage.USER__NAME:
 				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-			case UserPerformancePackage.USER__STATUS:
-				return status != STATUS_EDEFAULT;
 			case UserPerformancePackage.USER__DATE_START:
 				return DATE_START_EDEFAULT == null ? dateStart != null : !DATE_START_EDEFAULT.equals(dateStart);
 			case UserPerformancePackage.USER__DATE_END:
@@ -528,8 +476,6 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 		StringBuffer result = new StringBuffer(super.toString());
 		result.append(" (name: ");
 		result.append(name);
-		result.append(", status: ");
-		result.append(status);
 		result.append(", dateStart: ");
 		result.append(dateStart);
 		result.append(", dateEnd: ");

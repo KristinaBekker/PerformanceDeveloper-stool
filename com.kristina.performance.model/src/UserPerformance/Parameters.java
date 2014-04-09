@@ -21,8 +21,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link UserPerformance.Parameters#getErrorsCount <em>Errors Count</em>}</li>
  *   <li>{@link UserPerformance.Parameters#getTimeToCorrectionErrors <em>Time To Correction Errors</em>}</li>
  *   <li>{@link UserPerformance.Parameters#getTypoCount <em>Typo Count</em>}</li>
- *   <li>{@link UserPerformance.Parameters#getCountSucsessefulLaunch <em>Count Sucsesseful Launch</em>}</li>
- *   <li>{@link UserPerformance.Parameters#getCountUnsucsessfulLaunch <em>Count Unsucsessful Launch</em>}</li>
  * </ul>
  * </p>
  *
@@ -273,58 +271,5 @@ public interface Parameters extends EObject {
 	 * @generated
 	 */
 	void setTypoCount(int value);
-
-	/**
-	 * Returns the value of the '<em><b>Count Sucsesseful Launch</b></em>' attribute.
-	 * The default value is <code>"0"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Count Sucsesseful Launch</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Count Sucsesseful Launch</em>' attribute.
-	 * @see #setCountSucsessefulLaunch(int)
-	 * @see UserPerformance.UserPerformancePackage#getParameters_CountSucsessefulLaunch()
-	 * @model default="0"
-	 * @generated
-	 */
-	int getCountSucsessefulLaunch();
-
-	/**
-	 * Sets the value of the '{@link UserPerformance.Parameters#getCountSucsessefulLaunch <em>Count Sucsesseful Launch</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Count Sucsesseful Launch</em>' attribute.
-	 * @see #getCountSucsessefulLaunch()
-	 * @generated
-	 */
-	void setCountSucsessefulLaunch(int value);
-
-	/**
-	 * Returns the value of the '<em><b>Count Unsucsessful Launch</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Count Unsucsessful Launch</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Count Unsucsessful Launch</em>' attribute.
-	 * @see #setCountUnsucsessfulLaunch(int)
-	 * @see UserPerformance.UserPerformancePackage#getParameters_CountUnsucsessfulLaunch()
-	 * @model
-	 * @generated
-	 */
-	int getCountUnsucsessfulLaunch();
-
-	/**
-	 * Sets the value of the '{@link UserPerformance.Parameters#getCountUnsucsessfulLaunch <em>Count Unsucsessful Launch</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Count Unsucsessful Launch</em>' attribute.
-	 * @see #getCountUnsucsessfulLaunch()
-	 * @generated
-	 */
-	void setCountUnsucsessfulLaunch(int value);
 
 } // Parameters

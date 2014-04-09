@@ -28,8 +28,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link UserPerformance.impl.ParametersImpl#getErrorsCount <em>Errors Count</em>}</li>
  *   <li>{@link UserPerformance.impl.ParametersImpl#getTimeToCorrectionErrors <em>Time To Correction Errors</em>}</li>
  *   <li>{@link UserPerformance.impl.ParametersImpl#getTypoCount <em>Typo Count</em>}</li>
- *   <li>{@link UserPerformance.impl.ParametersImpl#getCountSucsessefulLaunch <em>Count Sucsesseful Launch</em>}</li>
- *   <li>{@link UserPerformance.impl.ParametersImpl#getCountUnsucsessfulLaunch <em>Count Unsucsessful Launch</em>}</li>
  * </ul>
  * </p>
  *
@@ -215,46 +213,6 @@ public class ParametersImpl extends MinimalEObjectImpl.Container implements Para
 	 * @ordered
 	 */
 	protected int typoCount = TYPO_COUNT_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getCountSucsessefulLaunch() <em>Count Sucsesseful Launch</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCountSucsessefulLaunch()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int COUNT_SUCSESSEFUL_LAUNCH_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getCountSucsessefulLaunch() <em>Count Sucsesseful Launch</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCountSucsessefulLaunch()
-	 * @generated
-	 * @ordered
-	 */
-	protected int countSucsessefulLaunch = COUNT_SUCSESSEFUL_LAUNCH_EDEFAULT;
-
-	/**
-	 * The default value of the '{@link #getCountUnsucsessfulLaunch() <em>Count Unsucsessful Launch</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCountUnsucsessfulLaunch()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int COUNT_UNSUCSESSFUL_LAUNCH_EDEFAULT = 0;
-
-	/**
-	 * The cached value of the '{@link #getCountUnsucsessfulLaunch() <em>Count Unsucsessful Launch</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getCountUnsucsessfulLaunch()
-	 * @generated
-	 * @ordered
-	 */
-	protected int countUnsucsessfulLaunch = COUNT_UNSUCSESSFUL_LAUNCH_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -469,48 +427,6 @@ public class ParametersImpl extends MinimalEObjectImpl.Container implements Para
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public int getCountSucsessefulLaunch() {
-		return countSucsessefulLaunch;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCountSucsessefulLaunch(int newCountSucsessefulLaunch) {
-		int oldCountSucsessefulLaunch = countSucsessefulLaunch;
-		countSucsessefulLaunch = newCountSucsessefulLaunch;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UserPerformancePackage.PARAMETERS__COUNT_SUCSESSEFUL_LAUNCH, oldCountSucsessefulLaunch, countSucsessefulLaunch));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public int getCountUnsucsessfulLaunch() {
-		return countUnsucsessfulLaunch;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setCountUnsucsessfulLaunch(int newCountUnsucsessfulLaunch) {
-		int oldCountUnsucsessfulLaunch = countUnsucsessfulLaunch;
-		countUnsucsessfulLaunch = newCountUnsucsessfulLaunch;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UserPerformancePackage.PARAMETERS__COUNT_UNSUCSESSFUL_LAUNCH, oldCountUnsucsessfulLaunch, countUnsucsessfulLaunch));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
@@ -532,10 +448,6 @@ public class ParametersImpl extends MinimalEObjectImpl.Container implements Para
 				return getTimeToCorrectionErrors();
 			case UserPerformancePackage.PARAMETERS__TYPO_COUNT:
 				return getTypoCount();
-			case UserPerformancePackage.PARAMETERS__COUNT_SUCSESSEFUL_LAUNCH:
-				return getCountSucsessefulLaunch();
-			case UserPerformancePackage.PARAMETERS__COUNT_UNSUCSESSFUL_LAUNCH:
-				return getCountUnsucsessfulLaunch();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -574,12 +486,6 @@ public class ParametersImpl extends MinimalEObjectImpl.Container implements Para
 				return;
 			case UserPerformancePackage.PARAMETERS__TYPO_COUNT:
 				setTypoCount((Integer)newValue);
-				return;
-			case UserPerformancePackage.PARAMETERS__COUNT_SUCSESSEFUL_LAUNCH:
-				setCountSucsessefulLaunch((Integer)newValue);
-				return;
-			case UserPerformancePackage.PARAMETERS__COUNT_UNSUCSESSFUL_LAUNCH:
-				setCountUnsucsessfulLaunch((Integer)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -620,12 +526,6 @@ public class ParametersImpl extends MinimalEObjectImpl.Container implements Para
 			case UserPerformancePackage.PARAMETERS__TYPO_COUNT:
 				setTypoCount(TYPO_COUNT_EDEFAULT);
 				return;
-			case UserPerformancePackage.PARAMETERS__COUNT_SUCSESSEFUL_LAUNCH:
-				setCountSucsessefulLaunch(COUNT_SUCSESSEFUL_LAUNCH_EDEFAULT);
-				return;
-			case UserPerformancePackage.PARAMETERS__COUNT_UNSUCSESSFUL_LAUNCH:
-				setCountUnsucsessfulLaunch(COUNT_UNSUCSESSFUL_LAUNCH_EDEFAULT);
-				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -656,10 +556,6 @@ public class ParametersImpl extends MinimalEObjectImpl.Container implements Para
 				return timeToCorrectionErrors != TIME_TO_CORRECTION_ERRORS_EDEFAULT;
 			case UserPerformancePackage.PARAMETERS__TYPO_COUNT:
 				return typoCount != TYPO_COUNT_EDEFAULT;
-			case UserPerformancePackage.PARAMETERS__COUNT_SUCSESSEFUL_LAUNCH:
-				return countSucsessefulLaunch != COUNT_SUCSESSEFUL_LAUNCH_EDEFAULT;
-			case UserPerformancePackage.PARAMETERS__COUNT_UNSUCSESSFUL_LAUNCH:
-				return countUnsucsessfulLaunch != COUNT_UNSUCSESSFUL_LAUNCH_EDEFAULT;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -692,10 +588,6 @@ public class ParametersImpl extends MinimalEObjectImpl.Container implements Para
 		result.append(timeToCorrectionErrors);
 		result.append(", typoCount: ");
 		result.append(typoCount);
-		result.append(", CountSucsessefulLaunch: ");
-		result.append(countSucsessefulLaunch);
-		result.append(", CountUnsucsessfulLaunch: ");
-		result.append(countUnsucsessfulLaunch);
 		result.append(')');
 		return result.toString();
 	}

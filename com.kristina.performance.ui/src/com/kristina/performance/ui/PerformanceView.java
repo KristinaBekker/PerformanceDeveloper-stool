@@ -40,7 +40,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TabFolder;
@@ -58,6 +57,7 @@ import UserPerformance.Task;
 import UserPerformance.User;
 import UserPerformance.UserPerformanceFactory;
 
+import com.kristina.performance.core.IUserPerformanceModelLister;
 import com.kristina.performance.core.PerformanceModel;
 
 public class PerformanceView extends ViewPart {
@@ -65,17 +65,17 @@ public class PerformanceView extends ViewPart {
 	private static final String PAUSE = "pause";
 	private static final String START = "start";
 	private static final String STOP = "stop";
-	
+
 	private Performance performance = PerformanceModel.getInstance()
 			.getPerformance();
-	
+
 	private Action removePerformanceAction;
 	private Action startPerformanceAction;
 	private Action pausevePerformanceAction;
 	private Action stopPerformanceAction;
-	
+
 	private TreeViewer performanceTreeViewer;
-	
+
 	private User user = performance.getUsers();
 
 	private Button removeButton;
@@ -105,35 +105,30 @@ public class PerformanceView extends ViewPart {
 		TabFolder composite = new TabFolder(parent, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(composite);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
-		TabItem mainTab = new TabItem (composite, SWT.NULL);
-		 mainTab.setText ("Main" );
-		 TabItem byDateTab = new TabItem(composite, SWT.NULL);
-		 byDateTab.setText("By date");
-		 Composite mainTabControl  = new Composite(composite, SWT.NONE);
-		 GridLayoutFactory.fillDefaults().numColumns(1).applyTo(mainTabControl);
-			GridDataFactory.fillDefaults().grab(true, true).applyTo(mainTabControl);
-		mainTab.setControl(mainTabControl  );
-		
-		
+		TabItem mainTab = new TabItem(composite, SWT.NULL);
+		mainTab.setText("Main");
+		TabItem byDateTab = new TabItem(composite, SWT.NULL);
+		byDateTab.setText("By date");
+		Composite mainTabControl = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(mainTabControl);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(mainTabControl);
+		mainTab.setControl(mainTabControl);
+
 		createButtons(mainTabControl);
 		createViewer(mainTabControl);
-		
+
 		createActions();
 		createModelListener();
-	
+
 		createDataBinding(dbc);
 
 	}
 
 	private void createModelListener() {
-	
-//	 ((Performance)user.eContainer()).eAdapters().h
-			
-		
-		 
-	 }
 
+		// ((Performance)user.eContainer()).eAdapters().h
 
+	}
 
 	private void createDataBinding(DataBindingContext dbc2) {
 		final IObservableValue launchViewerSelection = ViewersObservables
@@ -243,8 +238,6 @@ public class PerformanceView extends ViewPart {
 		dbc.bindValue(SWTObservables.observeEnabled(downButton), downSelected);
 		dbc.bindValue(SWTObservables.observeEnabled(moreButton), moreSelected);
 	}
-
-
 
 	private void createActions() {
 
@@ -365,26 +358,13 @@ public class PerformanceView extends ViewPart {
 
 			public void run() {
 
-				for (Task task : user.getTasks()) {
-					if (task.getStatus().equals(START)) {
-						task.setStatus(PAUSE);
-						break;
-					}
-					for (Task subtask : task.getSubtasks()) {
-
-						if (subtask.getStatus().equals(START)) {
-							subtask.setStatus(PAUSE);
-							break;
-						}
-					}
-				}
 				if (((IStructuredSelection) performanceTreeViewer
 						.getSelection()).toArray().length != 0) {
 					for (Object item : ((IStructuredSelection) performanceTreeViewer
 							.getSelection()).toArray()) {
 						if (item instanceof Task) {
-
-							((Task) item).setStatus(START);
+							Task task = (Task) item;
+							startStaus(task);
 						}
 
 					}
@@ -416,7 +396,8 @@ public class PerformanceView extends ViewPart {
 							.getSelection()).toArray()) {
 						if (item instanceof Task) {
 
-							((Task) item).setStatus(PAUSE);
+							// ((Task) item).setStatus(PAUSE);
+							setTaskStatus((Task) item, PAUSE);
 						}
 
 					}
@@ -446,8 +427,8 @@ public class PerformanceView extends ViewPart {
 					for (Object item : ((IStructuredSelection) performanceTreeViewer
 							.getSelection()).toArray()) {
 						if (item instanceof Task) {
-
-							((Task) item).setStatus(STOP);
+							setTaskStatus((Task) item, STOP);
+//							((Task) item).setStatus(STOP);
 						}
 
 					}
@@ -516,7 +497,7 @@ public class PerformanceView extends ViewPart {
 					return null;
 			}
 		};
-		name.setEditingSupport(new EditingSupport(performanceTreeViewer ) {
+		name.setEditingSupport(new EditingSupport(performanceTreeViewer) {
 			@Override
 			protected void setValue(Object element, Object value) {
 				if (element instanceof Task) {
@@ -528,8 +509,7 @@ public class PerformanceView extends ViewPart {
 			@Override
 			protected Object getValue(Object element) {
 				if (element instanceof Task) {
-					String nameValue = ((Task) element)
-							.getName();
+					String nameValue = ((Task) element).getName();
 					if (nameValue == null) {
 						return "";
 					} else {
@@ -629,54 +609,58 @@ public class PerformanceView extends ViewPart {
 						new PerfomanceTreeFactoryImpl(), null));
 
 		performanceTreeViewer.setInput(performance);
-		PerformanceModel.getInstance().r.add(new Runnable() {
-			
+		final IUserPerformanceModelLister modelListener = new IUserPerformanceModelLister() {
+
 			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-			performanceTreeViewer.getControl().getDisplay().syncExec(new Runnable() {
-				
-				@Override
-				public void run() {
-					performanceTreeViewer.refresh();
-					
-				}
-			});	
+			public void taskModifyed(final Task task) {
+
+				performanceTreeViewer.getControl().getDisplay()
+						.asyncExec(new Runnable() {
+
+							@Override
+							public void run() {
+
+								performanceTreeViewer.refresh(task);
+							}
+						});
 			}
-		});
-	//	item.setControl(composite);
-performanceTreeViewer.getControl().addDisposeListener(new DisposeListener() {
-	
-	@Override
-	public void widgetDisposed(DisposeEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-});
+
+			@Override
+			public void userModifyed(final User user) {
+				performanceTreeViewer.getControl().getDisplay()
+						.asyncExec(new Runnable() {
+
+							@Override
+							public void run() {
+
+								performanceTreeViewer.refresh(user);
+							}
+						});
+			}
+		};
+		PerformanceModel.getInstance().listeners.add(modelListener);
+
+		performanceTreeViewer.getControl().addDisposeListener(
+				new DisposeListener() {
+
+					@Override
+					public void widgetDisposed(DisposeEvent e) {
+						PerformanceModel.getInstance().listeners
+								.remove(modelListener);
+					}
+				});
 	}
 
 	private void createTask(String name, String description) {
 		Task newTask = UserPerformanceFactory.eINSTANCE.createTask();
 		newTask.setName(name);
 		newTask.setDescription(description);
-		newTask.setStatus(START);
 		newTask.setDateStart(Calendar.getInstance().getTime());
+
 		Parameters parameters = UserPerformanceFactory.eINSTANCE
 				.createParameters();
 		newTask.setParameters(parameters);
-		for (Task task : user.getTasks()) {
-			if (task.getStatus().equals(START)) {
-				task.setStatus(PAUSE);
-				break;
-			}
-			for (Task subtask : task.getSubtasks()) {
 
-				if (subtask.getStatus().equals(START)) {
-					subtask.setStatus(PAUSE);
-					break;
-				}
-			}
-		}
 		if (((IStructuredSelection) performanceTreeViewer.getSelection())
 				.toArray().length != 0) {
 			for (Object item : ((IStructuredSelection) performanceTreeViewer
@@ -693,7 +677,7 @@ performanceTreeViewer.getControl().addDisposeListener(new DisposeListener() {
 		} else {
 			user.getTasks().add(newTask);
 		}
-		user.getTasks().get(0).getParameters().getTimeActive();
+		startStaus(newTask);
 		performanceTreeViewer.expandAll();
 	}
 
@@ -703,7 +687,7 @@ performanceTreeViewer.getControl().addDisposeListener(new DisposeListener() {
 				.applyTo(compositeWithButtons);
 		GridLayoutFactory.swtDefaults().numColumns(5)
 				.applyTo(compositeWithButtons);
-//		Button add = createPushButton(compositeWithButtons, null, null);
+		// Button add = createPushButton(compositeWithButtons, null, null);
 		Button add = new Button(compositeWithButtons, SWT.PUSH);
 		add.setText("Add");
 		add.addSelectionListener(new SelectionListener() {
@@ -728,7 +712,7 @@ performanceTreeViewer.getControl().addDisposeListener(new DisposeListener() {
 
 			}
 		});
-//		removeButton = createPushButton(compositeWithButtons, null, null);
+		// removeButton = createPushButton(compositeWithButtons, null, null);
 		removeButton = new Button(compositeWithButtons, SWT.PUSH);
 		removeButton.setText("Remove");
 		removeButton.addSelectionListener(new SelectionListener() {
@@ -745,7 +729,7 @@ performanceTreeViewer.getControl().addDisposeListener(new DisposeListener() {
 
 			}
 		});
-//		upButton = createPushButton(compositeWithButtons, null, null);
+		// upButton = createPushButton(compositeWithButtons, null, null);
 		upButton = new Button(compositeWithButtons, SWT.PUSH);
 		upButton.setText("Up");
 		upButton.addSelectionListener(new SelectionListener() {
@@ -761,8 +745,8 @@ performanceTreeViewer.getControl().addDisposeListener(new DisposeListener() {
 
 			}
 		});
-//		downButton = createPushButton(compositeWithButtons, null, null);
-		downButton  = new Button(compositeWithButtons, SWT.PUSH);
+		// downButton = createPushButton(compositeWithButtons, null, null);
+		downButton = new Button(compositeWithButtons, SWT.PUSH);
 		downButton.setText("Down");
 		downButton.addSelectionListener(new SelectionListener() {
 
@@ -778,7 +762,7 @@ performanceTreeViewer.getControl().addDisposeListener(new DisposeListener() {
 
 			}
 		});
-//		moreButton = createPushButton(compositeWithButtons, null, null);
+		// moreButton = createPushButton(compositeWithButtons, null, null);
 		moreButton = new Button(compositeWithButtons, SWT.PUSH);
 		moreButton.setText("About");
 		moreButton.addSelectionListener(new SelectionListener() {
@@ -793,7 +777,6 @@ performanceTreeViewer.getControl().addDisposeListener(new DisposeListener() {
 				// TODO Auto-generated method stub
 			}
 		});
-//item.setControl(compositeWithButtons);
 	}
 
 	private void moreInfo() {
@@ -965,6 +948,51 @@ performanceTreeViewer.getControl().addDisposeListener(new DisposeListener() {
 			}
 		}
 		performanceTreeViewer.expandAll();
+	}
+
+	private void startStaus(Task task) {
+		EObject container = task.eContainer();
+		if (container instanceof Task) {
+			for (Task subtask : ((Task) container).getSubtasks()) {
+
+				if (subtask.getStatus().equals(START)
+						&& !(subtask.equals(task))) {
+					// subtask.setStatus(PAUSE);
+					setTaskStatus(subtask, PAUSE);
+					break;
+				}
+			}
+			task.setStatus(START);
+			startStaus(((Task) container));
+		} else if (container instanceof User) {
+			for (Task subtask : ((User) container).getTasks()) {
+
+				if (subtask.getStatus().equals(START)
+						&& !(subtask.equals(task))) {
+					setTaskStatus(subtask, PAUSE);
+					break;
+				}
+			}
+			task.setStatus(START);
+		}
+
+	}
+
+	private void setTaskStatus(Task task, String status) {
+
+		task.setStatus(status);
+		checkTaskStatus(task, status);
+
+	}
+
+	private void checkTaskStatus(Task task, String status) {
+		if (task.getSubtasks() != null) {
+			for (Task subtask : task.getSubtasks()) {
+				checkTaskStatus(subtask, status);
+				subtask.setStatus(status);
+			}
+		}
+
 	}
 
 }

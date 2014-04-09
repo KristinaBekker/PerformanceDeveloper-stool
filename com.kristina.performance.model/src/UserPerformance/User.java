@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link UserPerformance.User#getTasks <em>Tasks</em>}</li>
  *   <li>{@link UserPerformance.User#getName <em>Name</em>}</li>
- *   <li>{@link UserPerformance.User#isStatus <em>Status</em>}</li>
  *   <li>{@link UserPerformance.User#getDateStart <em>Date Start</em>}</li>
  *   <li>{@link UserPerformance.User#getDateEnd <em>Date End</em>}</li>
  *   <li>{@link UserPerformance.User#getCurrentDate <em>Current Date</em>}</li>
@@ -73,32 +72,6 @@ public interface User extends EObject {
 	 * @generated
 	 */
 	void setName(String value);
-
-	/**
-	 * Returns the value of the '<em><b>Status</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Status</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Status</em>' attribute.
-	 * @see #setStatus(boolean)
-	 * @see UserPerformance.UserPerformancePackage#getUser_Status()
-	 * @model
-	 * @generated
-	 */
-	boolean isStatus();
-
-	/**
-	 * Sets the value of the '{@link UserPerformance.User#isStatus <em>Status</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Status</em>' attribute.
-	 * @see #isStatus()
-	 * @generated
-	 */
-	void setStatus(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Date Start</b></em>' attribute.

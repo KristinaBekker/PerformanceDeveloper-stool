@@ -66,7 +66,7 @@ public class TaskImpl extends MinimalEObjectImpl.Container implements Task {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String STATUS_EDEFAULT = null;
+	protected static final String STATUS_EDEFAULT = " ";
 
 	/**
 	 * The cached value of the '{@link #getStatus() <em>Status</em>}' attribute.

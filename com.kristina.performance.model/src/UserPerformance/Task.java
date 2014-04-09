@@ -60,6 +60,7 @@ public interface Task extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Status</b></em>' attribute.
+	 * The default value is <code>" "</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Status</em>' attribute isn't clear,
@@ -69,7 +70,7 @@ public interface Task extends EObject {
 	 * @return the value of the '<em>Status</em>' attribute.
 	 * @see #setStatus(String)
 	 * @see UserPerformance.UserPerformancePackage#getTask_Status()
-	 * @model
+	 * @model default=" "
 	 * @generated
 	 */
 	String getStatus();

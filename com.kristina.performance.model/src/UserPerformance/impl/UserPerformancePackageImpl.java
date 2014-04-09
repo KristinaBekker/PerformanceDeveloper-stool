@@ -150,7 +150,7 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUser_Status() {
+	public EAttribute getUser_DateStart() {
 		return (EAttribute)userEClass.getEStructuralFeatures().get(2);
 	}
 
@@ -159,7 +159,7 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUser_DateStart() {
+	public EAttribute getUser_DateEnd() {
 		return (EAttribute)userEClass.getEStructuralFeatures().get(3);
 	}
 
@@ -168,7 +168,7 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUser_DateEnd() {
+	public EAttribute getUser_CurrentDate() {
 		return (EAttribute)userEClass.getEStructuralFeatures().get(4);
 	}
 
@@ -177,17 +177,8 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getUser_CurrentDate() {
-		return (EAttribute)userEClass.getEStructuralFeatures().get(5);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EReference getUser_Intervals() {
-		return (EReference)userEClass.getEStructuralFeatures().get(7);
+		return (EReference)userEClass.getEStructuralFeatures().get(6);
 	}
 
 	/**
@@ -196,7 +187,7 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 	 * @generated
 	 */
 	public EReference getUser_Parameters() {
-		return (EReference)userEClass.getEStructuralFeatures().get(6);
+		return (EReference)userEClass.getEStructuralFeatures().get(5);
 	}
 
 	/**
@@ -375,24 +366,6 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getParameters_CountSucsessefulLaunch() {
-		return (EAttribute)parametersEClass.getEStructuralFeatures().get(9);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EAttribute getParameters_CountUnsucsessfulLaunch() {
-		return (EAttribute)parametersEClass.getEStructuralFeatures().get(10);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getInterval() {
 		return intervalEClass;
 	}
@@ -482,7 +455,6 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 		userEClass = createEClass(USER);
 		createEReference(userEClass, USER__TASKS);
 		createEAttribute(userEClass, USER__NAME);
-		createEAttribute(userEClass, USER__STATUS);
 		createEAttribute(userEClass, USER__DATE_START);
 		createEAttribute(userEClass, USER__DATE_END);
 		createEAttribute(userEClass, USER__CURRENT_DATE);
@@ -509,8 +481,6 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 		createEAttribute(parametersEClass, PARAMETERS__ERRORS_COUNT);
 		createEAttribute(parametersEClass, PARAMETERS__TIME_TO_CORRECTION_ERRORS);
 		createEAttribute(parametersEClass, PARAMETERS__TYPO_COUNT);
-		createEAttribute(parametersEClass, PARAMETERS__COUNT_SUCSESSEFUL_LAUNCH);
-		createEAttribute(parametersEClass, PARAMETERS__COUNT_UNSUCSESSFUL_LAUNCH);
 
 		intervalEClass = createEClass(INTERVAL);
 		createEAttribute(intervalEClass, INTERVAL__START);
@@ -555,7 +525,6 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 		initEClass(userEClass, User.class, "User", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUser_Tasks(), this.getTask(), null, "tasks", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUser_Name(), ecorePackage.getEString(), "name", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getUser_Status(), ecorePackage.getEBoolean(), "status", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUser_DateStart(), ecorePackage.getEDate(), "dateStart", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUser_DateEnd(), ecorePackage.getEDate(), "dateEnd", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUser_CurrentDate(), ecorePackage.getEDate(), "currentDate", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -564,7 +533,7 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getTask_Status(), ecorePackage.getEString(), "status", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getTask_Status(), ecorePackage.getEString(), "status", " ", 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_DateStart(), ecorePackage.getEDate(), "dateStart", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_DateEnd(), ecorePackage.getEDate(), "dateEnd", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getTask_CurrentDate(), ecorePackage.getEDate(), "currentDate", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -582,8 +551,6 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 		initEAttribute(getParameters_ErrorsCount(), ecorePackage.getEInt(), "errorsCount", "0", 0, 1, Parameters.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameters_TimeToCorrectionErrors(), ecorePackage.getEDouble(), "timeToCorrectionErrors", "0", 0, 1, Parameters.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getParameters_TypoCount(), ecorePackage.getEInt(), "typoCount", "0", 0, 1, Parameters.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameters_CountSucsessefulLaunch(), ecorePackage.getEInt(), "CountSucsessefulLaunch", "0", 0, 1, Parameters.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getParameters_CountUnsucsessfulLaunch(), ecorePackage.getEInt(), "CountUnsucsessfulLaunch", null, 0, 1, Parameters.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(intervalEClass, Interval.class, "Interval", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getInterval_Start(), ecorePackage.getEDate(), "start", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -85,22 +85,13 @@ public interface UserPerformancePackage extends EPackage {
 	int USER__NAME = 1;
 
 	/**
-	 * The feature id for the '<em><b>Status</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int USER__STATUS = 2;
-
-	/**
 	 * The feature id for the '<em><b>Date Start</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int USER__DATE_START = 3;
+	int USER__DATE_START = 2;
 
 	/**
 	 * The feature id for the '<em><b>Date End</b></em>' attribute.
@@ -109,7 +100,7 @@ public interface UserPerformancePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER__DATE_END = 4;
+	int USER__DATE_END = 3;
 
 	/**
 	 * The feature id for the '<em><b>Current Date</b></em>' attribute.
@@ -118,7 +109,7 @@ public interface UserPerformancePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER__CURRENT_DATE = 5;
+	int USER__CURRENT_DATE = 4;
 
 	/**
 	 * The feature id for the '<em><b>Parameters</b></em>' containment reference.
@@ -127,7 +118,7 @@ public interface UserPerformancePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER__PARAMETERS = 6;
+	int USER__PARAMETERS = 5;
 
 	/**
 	 * The feature id for the '<em><b>Intervals</b></em>' containment reference list.
@@ -136,7 +127,7 @@ public interface UserPerformancePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER__INTERVALS = 7;
+	int USER__INTERVALS = 6;
 
 	/**
 	 * The number of structural features of the '<em>User</em>' class.
@@ -145,7 +136,7 @@ public interface UserPerformancePackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int USER_FEATURE_COUNT = 8;
+	int USER_FEATURE_COUNT = 7;
 
 	/**
 	 * The number of operations of the '<em>User</em>' class.
@@ -348,31 +339,13 @@ public interface UserPerformancePackage extends EPackage {
 	int PARAMETERS__TYPO_COUNT = 8;
 
 	/**
-	 * The feature id for the '<em><b>Count Sucsesseful Launch</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERS__COUNT_SUCSESSEFUL_LAUNCH = 9;
-
-	/**
-	 * The feature id for the '<em><b>Count Unsucsessful Launch</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int PARAMETERS__COUNT_UNSUCSESSFUL_LAUNCH = 10;
-
-	/**
 	 * The number of structural features of the '<em>Parameters</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int PARAMETERS_FEATURE_COUNT = 11;
+	int PARAMETERS_FEATURE_COUNT = 9;
 
 	/**
 	 * The number of operations of the '<em>Parameters</em>' class.
@@ -516,17 +489,6 @@ public interface UserPerformancePackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getUser_Name();
-
-	/**
-	 * Returns the meta object for the attribute '{@link UserPerformance.User#isStatus <em>Status</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Status</em>'.
-	 * @see UserPerformance.User#isStatus()
-	 * @see #getUser()
-	 * @generated
-	 */
-	EAttribute getUser_Status();
 
 	/**
 	 * Returns the meta object for the attribute '{@link UserPerformance.User#getDateStart <em>Date Start</em>}'.
@@ -791,28 +753,6 @@ public interface UserPerformancePackage extends EPackage {
 	EAttribute getParameters_TypoCount();
 
 	/**
-	 * Returns the meta object for the attribute '{@link UserPerformance.Parameters#getCountSucsessefulLaunch <em>Count Sucsesseful Launch</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Count Sucsesseful Launch</em>'.
-	 * @see UserPerformance.Parameters#getCountSucsessefulLaunch()
-	 * @see #getParameters()
-	 * @generated
-	 */
-	EAttribute getParameters_CountSucsessefulLaunch();
-
-	/**
-	 * Returns the meta object for the attribute '{@link UserPerformance.Parameters#getCountUnsucsessfulLaunch <em>Count Unsucsessful Launch</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Count Unsucsessful Launch</em>'.
-	 * @see UserPerformance.Parameters#getCountUnsucsessfulLaunch()
-	 * @see #getParameters()
-	 * @generated
-	 */
-	EAttribute getParameters_CountUnsucsessfulLaunch();
-
-	/**
 	 * Returns the meta object for class '{@link UserPerformance.Interval <em>Interval</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -935,14 +875,6 @@ public interface UserPerformancePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute USER__NAME = eINSTANCE.getUser_Name();
-
-		/**
-		 * The meta object literal for the '<em><b>Status</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute USER__STATUS = eINSTANCE.getUser_Status();
 
 		/**
 		 * The meta object literal for the '<em><b>Date Start</b></em>' attribute feature.
@@ -1139,22 +1071,6 @@ public interface UserPerformancePackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute PARAMETERS__TYPO_COUNT = eINSTANCE.getParameters_TypoCount();
-
-		/**
-		 * The meta object literal for the '<em><b>Count Sucsesseful Launch</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PARAMETERS__COUNT_SUCSESSEFUL_LAUNCH = eINSTANCE.getParameters_CountSucsessefulLaunch();
-
-		/**
-		 * The meta object literal for the '<em><b>Count Unsucsessful Launch</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute PARAMETERS__COUNT_UNSUCSESSFUL_LAUNCH = eINSTANCE.getParameters_CountUnsucsessfulLaunch();
 
 		/**
 		 * The meta object literal for the '{@link UserPerformance.impl.IntervalImpl <em>Interval</em>}' class.
