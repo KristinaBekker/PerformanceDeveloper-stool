@@ -32,9 +32,9 @@ public class PerformanceCore {
 		startTimeInterval = Calendar.getInstance().getTime();
 		currentTimeInterval = Calendar.getInstance().getTime();
 		interval = UserPerformanceFactory.eINSTANCE.createInterval();
-		Parameters parameter = UserPerformanceFactory.eINSTANCE.createParameters();
+		Parameters parameter = UserPerformanceFactory.eINSTANCE
+				.createParameters();
 		interval.setParameter(parameter);
-		
 		user = performance.getUsers();
 
 		PlatformUI.getWorkbench().addWindowListener(new IWindowListener() {
@@ -112,54 +112,58 @@ public class PerformanceCore {
 
 	private void checkedActivity() {
 		Date now = Calendar.getInstance().getTime();
-		long during = (now.getTime() - currentTimeInterval.getTime()) / 60000;
-		long during2 = (now.getTime() - startTimeInterval.getTime()) / 60000;
-		if (during < 5 || during2 < 5) {
+		long during = (now.getTime() - currentTimeInterval.getTime()) / 1000;
+		long during2 = (now.getTime() - startTimeInterval.getTime()) / 1000;
+		if (during > 5 || during2 > 5) {
 
 			addInterval(user);
 			startTimeInterval = now;
 			interval = UserPerformanceFactory.eINSTANCE.createInterval();
-			Parameters parameter = UserPerformanceFactory.eINSTANCE.createParameters();
+			Parameters parameter = UserPerformanceFactory.eINSTANCE
+					.createParameters();
 			interval.setParameter(parameter);
 		}
 		currentTimeInterval = now;
 	}
 
 	private void addInterval(User user) {
-		
-//		name = "common";
-//		long during = (currentTimeInterval.getTime() - startTimeInterval
-//				.getTime()) / 60000;
-//		if (!user.getTasks().isEmpty()) {
-//			for (Task task : user.getTasks()) {
-//				if (task.getStatus().equals(START)) {
-//					task.getParameters().setTimeActive(
-//							task.getParameters().getTimeActive() + during);
-//					name = task.getName();
-//					
-//				}
-//				for (Task subtask : task.getSubtasks()) {
-//
-//					if (subtask.getStatus().equals(START)) {
-//						subtask.getParameters().setTimeActive(
-//								subtask.getParameters().getTimeActive()
-//										+ during +400);
-//						subtask.getParameters().setTimeActive(
-//						subtask.getParameters().getTimeActive() + during);
-//						name = subtask.getName();
-//						
-//					}
-//				}
-//			}
-//		}
-//			user.getParameters().setTimeActive(
-//					user.getParameters().getTimeActive() + during +400);
-//			interval.getParameter().setTimeActive(during);
-//			interval.setNameTask(name);
-//			interval.setEnd(currentTimeInterval);
-//			interval.setStart(startTimeInterval);
-//			user.getIntervals().add(interval);
-		
+	//	Task startedTask = UserPerformanceFactory.eINSTANCE.createTask();
+		String name = "Common";
+		long during = (currentTimeInterval.getTime() - startTimeInterval
+				 .getTime()) / 1000 ;
+		if (!user.getTasks().isEmpty()) {
+			for (Task task : user.getTasks()) {
+				if(task.getStatus().equals(START)){
+					Task startedTask = searchStartedTask(task, during);
+					name = startedTask.getName();
+				break;
+				}
+			}
+		}
+	
+	user.getParameters().setTimeActive( user.getParameters().getTimeActive() + during );
+			 interval.getParameter().setTimeActive(during);
+			 interval.setNameTask(name);
+			 interval.setEnd(currentTimeInterval);
+			 interval.setStart(startTimeInterval);
+			 user.getIntervals().add(interval);
+}
+	private Task searchStartedTask(Task task, long during) {
+		if(!task.getSubtasks().isEmpty()){
+			for(Task subtask : task.getSubtasks()){
+				if(subtask.getStatus().equals(START)){
+					task.getParameters().setTimeActive(task.getParameters().getTimeActive() + during);
+				return searchStartedTask(subtask,during);
+				}
+			}
+			task.getParameters().setTimeActive(task.getParameters().getTimeActive() + during);
+		return task;	
+		}
+		else{
+			task.getParameters().setTimeActive(task.getParameters().getTimeActive() + during);
+				return task;
+		}
 	}
+	 
 
 }

@@ -8,7 +8,7 @@ import UserPerformance.Task;
 public class BaseSelectionListenerStopTaskAction extends BaseSelectionListenerAction{
 
 	private static final Object STOP = "stop";
-	private static final Object PAUSE = "pause";
+	
 	protected BaseSelectionListenerStopTaskAction(String text) {
 		super(text);
 		// TODO Auto-generated constructor stub
@@ -17,7 +17,7 @@ public class BaseSelectionListenerStopTaskAction extends BaseSelectionListenerAc
 	protected boolean updateSelection(IStructuredSelection selection) {
 		for (Object y : selection.toArray()) {
 			if (y instanceof Task ) {
-				if(((Task)y).getStatus().equals(STOP) || ((Task)y).getStatus().equals(PAUSE))
+				if(((Task)y).getStatus().equals(STOP))
 					return false;
 				else
 				return true;

@@ -13,12 +13,13 @@ import UserPerformance.Performance;
 import UserPerformance.Task;
 import UserPerformance.User;
 import UserPerformance.UserPerformanceFactory;
+import UserPerformance.UserPerformancePackage;
 
 public class PerformanceModel {
 
 	private static volatile PerformanceModel instance = null;
 	private Performance performance;
-	public List<IUserPerformanceModelLister> listeners = new ArrayList<IUserPerformanceModelLister>();
+	private List<IUserPerformanceModelLister> listeners = new ArrayList<IUserPerformanceModelLister>();
 
 	private PerformanceModel() {
 		performance = UserPerformanceFactory.eINSTANCE.createPerformance();
@@ -30,7 +31,18 @@ public class PerformanceModel {
 				if (notification.getNotifier() instanceof Task) {
 
 					Task task = (Task) (notification.getNotifier());
+					if(UserPerformancePackage.Literals.TASK__NAME.equals(notification.getFeature())){
+						for (IUserPerformanceModelLister listener : listeners) {
 
+							listener.taskNameModifyed(task, notification.getNewStringValue());
+						}
+					}
+					if(UserPerformancePackage.Literals.TASK__STATUS.equals(notification.getFeature())){
+						for (IUserPerformanceModelLister listener : listeners) {
+
+							listener.taskStatusModifyed();
+						}
+					}
 					for (IUserPerformanceModelLister listener : listeners) {
 						listener.taskModifyed(task);
 					}
@@ -57,7 +69,7 @@ public class PerformanceModel {
 		Parameters parameters = UserPerformanceFactory.eINSTANCE
 				.createParameters();
 		user.setParameters(parameters);
-
+		
 		user.setDateStart(Calendar.getInstance().getTime());
 
 		performance.setUsers(user);
@@ -78,9 +90,9 @@ public class PerformanceModel {
 		return performance;
 	}
 
-	public void refreshName() {
-		// TODO Auto-generated method stub
-
+	
+	public List<IUserPerformanceModelLister> getlisteners(){
+		return listeners;
 	}
 
 }

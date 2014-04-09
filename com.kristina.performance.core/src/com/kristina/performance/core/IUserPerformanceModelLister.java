@@ -8,6 +8,8 @@ import UserPerformance.User;
 public interface IUserPerformanceModelLister extends EventListener {
 	void taskModifyed(Task task);
 	 void userModifyed(User user);
+	void taskNameModifyed(Task task, String value);
+	void taskStatusModifyed();
 
 	 
 }
