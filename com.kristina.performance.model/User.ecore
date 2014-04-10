@@ -5,7 +5,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="User">
     <eStructuralFeatures xsi:type="ecore:EReference" name="tasks" upperBound="-1"
         eType="#//Task" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="Common"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateStart" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dateEnd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="currentDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDate"/>
@@ -13,6 +14,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="intervals" upperBound="-1"
         eType="#//Interval" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="descriptoin" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="Common time"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Task">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

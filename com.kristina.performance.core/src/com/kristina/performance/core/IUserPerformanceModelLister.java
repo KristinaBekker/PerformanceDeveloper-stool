@@ -10,6 +10,11 @@ public interface IUserPerformanceModelLister extends EventListener {
 	 void userModifyed(User user);
 	void taskNameModifyed(Task task, String value);
 	void taskStatusModifyed();
+	void taskDescriptionModifyed(Task task, String value);
+	void taskTimeActiveModifyed(Task task, double d);
+	void userTimeActiveModifyed(double newDoubleValue);
+	void modifyed();
+	
 
 	 
 }

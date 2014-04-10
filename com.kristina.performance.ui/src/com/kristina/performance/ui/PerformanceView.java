@@ -31,6 +31,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
+import org.eclipse.nebula.widgets.datechooser.DateChooser;
+import org.eclipse.nebula.widgets.datechooser.DateChooserCombo;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -68,11 +70,11 @@ public class PerformanceView extends ViewPart {
 	private static final String PAUSE = "pause";
 	private static final String START = "start";
 	private static final String STOP = "stop";
-
+	
 	private Performance performance = PerformanceModel.getInstance()
 			.getPerformance();
 
-	private Action removePerformanceAction;
+	// private Action removePerformanceAction;
 	private Action startPerformanceAction;
 	private Action pausevePerformanceAction;
 	private Action stopPerformanceAction;
@@ -82,6 +84,8 @@ public class PerformanceView extends ViewPart {
 	private User user = performance.getUsers();
 
 	private Text taskName;
+	private Text taskDescription;
+	private Text activeTime;
 
 	private Button removeButton;
 	private Button upButton;
@@ -117,21 +121,28 @@ public class PerformanceView extends ViewPart {
 		Composite mainGeneralTabControl = new Composite(composite, SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(1)
 				.applyTo(mainGeneralTabControl);
+		Composite mainArchivelTabControl = new Composite(composite, SWT.NONE);
+		GridLayoutFactory.fillDefaults().numColumns(1)
+				.applyTo(mainArchivelTabControl);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(mainGeneralTabControl);
 		mainTab.setControl(mainGeneralTabControl);
+		byDateTab.setControl(mainArchivelTabControl); 
+		
 		Composite mainFirstTabControl = new Composite(mainGeneralTabControl,
 				SWT.NONE);
 		GridDataFactory.fillDefaults().grab(false, false)
 				.applyTo(mainFirstTabControl);
 		addStartedTaskDescription(mainFirstTabControl);
-		Composite mainSecondTabControl = new Composite(mainGeneralTabControl,
+		DateChooser date = new DateChooser(mainFirstTabControl, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(date);
+		Composite mainSecondTabControl = new Composite(mainArchivelTabControl,
 				SWT.NONE);
 		GridLayoutFactory.fillDefaults().numColumns(2)
 				.applyTo(mainSecondTabControl);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(mainSecondTabControl);
-
+		
 		createViewer(mainSecondTabControl);
 		createButtons(mainSecondTabControl);
 		createActions();
@@ -144,6 +155,18 @@ public class PerformanceView extends ViewPart {
 	private void createModelListener() {
 		final IUserPerformanceModelLister modelListener = new IUserPerformanceModelLister() {
 
+			@Override
+			public void modifyed() {
+				performanceTreeViewer.getControl().getDisplay()
+				.asyncExec(new Runnable() {
+
+					@Override
+					public void run() {
+
+						setDescription();
+					}
+				});
+			};
 			@Override
 			public void taskModifyed(final Task task) {
 
@@ -180,59 +203,132 @@ public class PerformanceView extends ViewPart {
 
 							@Override
 							public void run() {
-								Task startedTask  = null;
+								Task startedTask = null;
 								if (!user.getTasks().isEmpty()) {
 									for (Task task : user.getTasks()) {
-										if(task.getStatus().equals(START)){
-											 startedTask = searchStartedTask(task);
-											
-										break;
+										if (task.getStatus().equals(START)) {
+											startedTask = searchStartedTask(task);
+
+											break;
 										}
 									}
 								}
-								if(startedTask == null){
-								taskName.setText("common");
-								}
-								else{
-									if(task.equals(startedTask)){
+								if (startedTask == null) {
+									taskName.setText(user.getName());
+								} else {
+									if (task.equals(startedTask)) {
 										taskName.setText(value);
 									}
 								}
 							}
 						});
-			
-				
+
 			}
 
 			@Override
 			public void taskStatusModifyed() {
 				performanceTreeViewer.getControl().getDisplay()
-				.asyncExec(new Runnable() {
+						.asyncExec(new Runnable() {
 
-					@Override
-					public void run() {
-						Task startedTask  = null;
-						if (!user.getTasks().isEmpty()) {
-							for (Task task : user.getTasks()) {
-								if(task.getStatus().equals(START)){
-									 startedTask = searchStartedTask(task);
-									
-								break;
-								}
+							@Override
+							public void run() {
+								setDescription();
 							}
-						}
-						if(startedTask == null){
-						taskName.setText("common");
-						}
-						else{
-								taskName.setText(startedTask.getName());
-						}
-					}
-				});
-				
+
+						});
+
 			}
 
-		
+			@Override
+			public void taskDescriptionModifyed(final Task task,
+					final String value) {
+				performanceTreeViewer.getControl().getDisplay()
+						.asyncExec(new Runnable() {
+
+							@Override
+							public void run() {
+								Task startedTask = null;
+								if (!user.getTasks().isEmpty()) {
+									for (Task task : user.getTasks()) {
+										if (task.getStatus().equals(START)) {
+											startedTask = searchStartedTask(task);
+
+											break;
+										}
+									}
+								}
+								if (startedTask == null) {
+									taskDescription.setText(user
+											.getDescriptoin());
+								} else {
+									if (task.equals(startedTask)) {
+										taskDescription.setText(value);
+									}
+								}
+							}
+						});
+
+			}
+
+			@Override
+			public void taskTimeActiveModifyed(final Task task,
+					final double value) {
+				performanceTreeViewer.getControl().getDisplay()
+						.asyncExec(new Runnable() {
+
+							@Override
+							public void run() {
+								Task startedTask = null;
+								if (!user.getTasks().isEmpty()) {
+									for (Task task : user.getTasks()) {
+										if (task.getStatus().equals(START)) {
+											startedTask = searchStartedTask(task);
+
+											break;
+										}
+									}
+								}
+								if (startedTask == null) {
+									activeTime.setText(Double.toString(user
+											.getParameters().getTimeActive()));
+								} else {
+									if (task.equals(startedTask)) {
+										activeTime.setText(Double
+												.toString(value));
+										// taskDescription.setText(value);
+									}
+								}
+							}
+						});
+
+			}
+
+			@Override
+			public void userTimeActiveModifyed(double newDoubleValue) {
+				performanceTreeViewer.getControl().getDisplay()
+						.asyncExec(new Runnable() {
+
+							@Override
+							public void run() {
+								Task startedTask = null;
+								if (!user.getTasks().isEmpty()) {
+									for (Task task : user.getTasks()) {
+										if (task.getStatus().equals(START)) {
+											startedTask = searchStartedTask(task);
+
+											break;
+										}
+									}
+								}
+								if (startedTask == null) {
+									activeTime.setText(Double.toString(user
+											.getParameters().getTimeActive()));
+								}
+							}
+						});
+
+			}
+
 		};
 		PerformanceModel.getInstance().getlisteners().add(modelListener);
 
@@ -245,6 +341,32 @@ public class PerformanceView extends ViewPart {
 								.remove(modelListener);
 					}
 				});
+
+	}
+
+	private void setDescription() {
+		Task startedTask = null;
+		if (!user.getTasks().isEmpty()) {
+			for (Task task : user.getTasks()) {
+				if (task.getStatus().equals(START)) {
+					startedTask = searchStartedTask(task);
+
+					break;
+				}
+			}
+		}
+		if (startedTask == null) {
+			taskName.setText(user.getName());
+			taskDescription.setText(user.getDescriptoin());
+			activeTime.setText(Double.toString(user.getParameters()
+					.getTimeActive()));
+
+		} else {
+			taskName.setText(startedTask.getName());
+			taskDescription.setText(startedTask.getDescription());
+			activeTime.setText(Double.toString(startedTask.getParameters()
+					.getTimeActive()));
+		}
 
 	}
 
@@ -263,23 +385,25 @@ public class PerformanceView extends ViewPart {
 
 		taskName = new Text(mainFirstTabControl, SWT.BORDER);
 		taskName.setLayoutData(dataTaskName);
-		taskName.setText("Common");
+
 		Label lbtDescription = new Label(mainFirstTabControl, SWT.NONE);
 		lbtDescription.setText("Description");
 
 		GridData dataDescription = new GridData();
 		dataDescription.grabExcessHorizontalSpace = true;
 		dataDescription.horizontalAlignment = GridData.FILL;
-		Text description = new Text(mainFirstTabControl, SWT.BORDER);
-		description.setLayoutData(dataDescription);
+		taskDescription = new Text(mainFirstTabControl, SWT.BORDER);
+		taskDescription.setLayoutData(dataDescription);
+
 		Label lbtTimeActive = new Label(mainFirstTabControl, SWT.NONE);
 		lbtTimeActive.setText("Active time");
 
 		GridData dataTaskParameter = new GridData();
 		dataTaskParameter.grabExcessHorizontalSpace = false;
 
-		Text timeActive = new Text(mainFirstTabControl, SWT.BORDER);
-		timeActive.setLayoutData(dataTaskParameter);
+		activeTime = new Text(mainFirstTabControl, SWT.BORDER);
+		activeTime.setLayoutData(dataTaskParameter);
+		setDescription();
 
 	}
 
@@ -423,7 +547,7 @@ public class PerformanceView extends ViewPart {
 				TreeItem[] selection = performanceTreeViewer.getTree()
 						.getSelection();
 				if ((selection.length > 0) && (selection[0].getData() != null)) {
-					manager.add(removePerformanceAction);
+					// manager.add(removePerformanceAction);
 				}
 
 				manager.add(new Separator(
@@ -864,7 +988,7 @@ public class PerformanceView extends ViewPart {
 		});
 		moreButton = createPushButton(compositeWithButtons, null, null);
 		// moreButton = new Button(compositeWithButtons, SWT.PUSH);
-		moreButton.setText("About");
+		moreButton.setText("Information");
 		moreButton.addSelectionListener(new SelectionListener() {
 
 			@Override

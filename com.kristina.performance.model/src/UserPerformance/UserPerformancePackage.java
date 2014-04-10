@@ -130,13 +130,22 @@ public interface UserPerformancePackage extends EPackage {
 	int USER__INTERVALS = 6;
 
 	/**
+	 * The feature id for the '<em><b>Descriptoin</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int USER__DESCRIPTOIN = 7;
+
+	/**
 	 * The number of structural features of the '<em>User</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int USER_FEATURE_COUNT = 7;
+	int USER_FEATURE_COUNT = 8;
 
 	/**
 	 * The number of operations of the '<em>User</em>' class.
@@ -535,6 +544,17 @@ public interface UserPerformancePackage extends EPackage {
 	EReference getUser_Intervals();
 
 	/**
+	 * Returns the meta object for the attribute '{@link UserPerformance.User#getDescriptoin <em>Descriptoin</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Descriptoin</em>'.
+	 * @see UserPerformance.User#getDescriptoin()
+	 * @see #getUser()
+	 * @generated
+	 */
+	EAttribute getUser_Descriptoin();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link UserPerformance.User#getParameters <em>Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -907,6 +927,14 @@ public interface UserPerformancePackage extends EPackage {
 		 * @generated
 		 */
 		EReference USER__INTERVALS = eINSTANCE.getUser_Intervals();
+
+		/**
+		 * The meta object literal for the '<em><b>Descriptoin</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute USER__DESCRIPTOIN = eINSTANCE.getUser_Descriptoin();
 
 		/**
 		 * The meta object literal for the '<em><b>Parameters</b></em>' containment reference feature.

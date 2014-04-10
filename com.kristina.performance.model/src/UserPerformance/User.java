@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link UserPerformance.User#getCurrentDate <em>Current Date</em>}</li>
  *   <li>{@link UserPerformance.User#getParameters <em>Parameters</em>}</li>
  *   <li>{@link UserPerformance.User#getIntervals <em>Intervals</em>}</li>
+ *   <li>{@link UserPerformance.User#getDescriptoin <em>Descriptoin</em>}</li>
  * </ul>
  * </p>
  *
@@ -49,6 +50,7 @@ public interface User extends EObject {
 
 	/**
 	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * The default value is <code>"Common"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
@@ -58,7 +60,7 @@ public interface User extends EObject {
 	 * @return the value of the '<em>Name</em>' attribute.
 	 * @see #setName(String)
 	 * @see UserPerformance.UserPerformancePackage#getUser_Name()
-	 * @model
+	 * @model default="Common"
 	 * @generated
 	 */
 	String getName();
@@ -166,6 +168,33 @@ public interface User extends EObject {
 	 * @generated
 	 */
 	EList<Interval> getIntervals();
+
+	/**
+	 * Returns the value of the '<em><b>Descriptoin</b></em>' attribute.
+	 * The default value is <code>"Common time"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Descriptoin</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Descriptoin</em>' attribute.
+	 * @see #setDescriptoin(String)
+	 * @see UserPerformance.UserPerformancePackage#getUser_Descriptoin()
+	 * @model default="Common time"
+	 * @generated
+	 */
+	String getDescriptoin();
+
+	/**
+	 * Sets the value of the '{@link UserPerformance.User#getDescriptoin <em>Descriptoin</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Descriptoin</em>' attribute.
+	 * @see #getDescriptoin()
+	 * @generated
+	 */
+	void setDescriptoin(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Parameters</b></em>' containment reference.

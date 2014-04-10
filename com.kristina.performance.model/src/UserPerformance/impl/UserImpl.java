@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link UserPerformance.impl.UserImpl#getCurrentDate <em>Current Date</em>}</li>
  *   <li>{@link UserPerformance.impl.UserImpl#getParameters <em>Parameters</em>}</li>
  *   <li>{@link UserPerformance.impl.UserImpl#getIntervals <em>Intervals</em>}</li>
+ *   <li>{@link UserPerformance.impl.UserImpl#getDescriptoin <em>Descriptoin</em>}</li>
  * </ul>
  * </p>
  *
@@ -63,7 +64,7 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_EDEFAULT = null;
+	protected static final String NAME_EDEFAULT = "Common";
 
 	/**
 	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -154,6 +155,26 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 	 * @ordered
 	 */
 	protected EList<Interval> intervals;
+
+	/**
+	 * The default value of the '{@link #getDescriptoin() <em>Descriptoin</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescriptoin()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String DESCRIPTOIN_EDEFAULT = "Common time";
+
+	/**
+	 * The cached value of the '{@link #getDescriptoin() <em>Descriptoin</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getDescriptoin()
+	 * @generated
+	 * @ordered
+	 */
+	protected String descriptoin = DESCRIPTOIN_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -287,6 +308,27 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public String getDescriptoin() {
+		return descriptoin;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setDescriptoin(String newDescriptoin) {
+		String oldDescriptoin = descriptoin;
+		descriptoin = newDescriptoin;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, UserPerformancePackage.USER__DESCRIPTOIN, oldDescriptoin, descriptoin));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public Parameters getParameters() {
 		return parameters;
 	}
@@ -365,6 +407,8 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 				return getParameters();
 			case UserPerformancePackage.USER__INTERVALS:
 				return getIntervals();
+			case UserPerformancePackage.USER__DESCRIPTOIN:
+				return getDescriptoin();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -401,6 +445,9 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 				getIntervals().clear();
 				getIntervals().addAll((Collection<? extends Interval>)newValue);
 				return;
+			case UserPerformancePackage.USER__DESCRIPTOIN:
+				setDescriptoin((String)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -434,6 +481,9 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 			case UserPerformancePackage.USER__INTERVALS:
 				getIntervals().clear();
 				return;
+			case UserPerformancePackage.USER__DESCRIPTOIN:
+				setDescriptoin(DESCRIPTOIN_EDEFAULT);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -460,6 +510,8 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 				return parameters != null;
 			case UserPerformancePackage.USER__INTERVALS:
 				return intervals != null && !intervals.isEmpty();
+			case UserPerformancePackage.USER__DESCRIPTOIN:
+				return DESCRIPTOIN_EDEFAULT == null ? descriptoin != null : !DESCRIPTOIN_EDEFAULT.equals(descriptoin);
 		}
 		return super.eIsSet(featureID);
 	}
@@ -482,6 +534,8 @@ public class UserImpl extends MinimalEObjectImpl.Container implements User {
 		result.append(dateEnd);
 		result.append(", currentDate: ");
 		result.append(currentDate);
+		result.append(", descriptoin: ");
+		result.append(descriptoin);
 		result.append(')');
 		return result.toString();
 	}

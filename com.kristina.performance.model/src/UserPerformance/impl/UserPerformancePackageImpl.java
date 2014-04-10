@@ -186,6 +186,15 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getUser_Descriptoin() {
+		return (EAttribute)userEClass.getEStructuralFeatures().get(7);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EReference getUser_Parameters() {
 		return (EReference)userEClass.getEStructuralFeatures().get(5);
 	}
@@ -460,6 +469,7 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 		createEAttribute(userEClass, USER__CURRENT_DATE);
 		createEReference(userEClass, USER__PARAMETERS);
 		createEReference(userEClass, USER__INTERVALS);
+		createEAttribute(userEClass, USER__DESCRIPTOIN);
 
 		taskEClass = createEClass(TASK);
 		createEAttribute(taskEClass, TASK__NAME);
@@ -524,12 +534,13 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 		// Initialize classes, features, and operations; add parameters
 		initEClass(userEClass, User.class, "User", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getUser_Tasks(), this.getTask(), null, "tasks", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getUser_Name(), ecorePackage.getEString(), "name", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUser_Name(), ecorePackage.getEString(), "name", "Common", 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUser_DateStart(), ecorePackage.getEDate(), "dateStart", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUser_DateEnd(), ecorePackage.getEDate(), "dateEnd", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getUser_CurrentDate(), ecorePackage.getEDate(), "currentDate", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUser_Parameters(), this.getParameters(), null, "parameters", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getUser_Intervals(), this.getInterval(), null, "intervals", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getUser_Descriptoin(), ecorePackage.getEString(), "descriptoin", "Common time", 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(taskEClass, Task.class, "Task", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
