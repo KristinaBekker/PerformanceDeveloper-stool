@@ -23,7 +23,7 @@ public class PerformanceModel {
 
 	private PerformanceModel() {
 		performance = UserPerformanceFactory.eINSTANCE.createPerformance();
-
+		
 		performance.eAdapters().add(new EContentAdapter() {
 			@Override
 			public void notifyChanged(Notification notification) {

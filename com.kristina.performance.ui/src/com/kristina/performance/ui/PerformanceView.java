@@ -31,8 +31,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
-import org.eclipse.nebula.widgets.datechooser.DateChooser;
-import org.eclipse.nebula.widgets.datechooser.DateChooserCombo;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -70,7 +70,7 @@ public class PerformanceView extends ViewPart {
 	private static final String PAUSE = "pause";
 	private static final String START = "start";
 	private static final String STOP = "stop";
-	
+
 	private Performance performance = PerformanceModel.getInstance()
 			.getPerformance();
 
@@ -80,6 +80,7 @@ public class PerformanceView extends ViewPart {
 	private Action stopPerformanceAction;
 
 	private TreeViewer performanceTreeViewer;
+	private TreeViewer byDateTreeViewer;
 
 	private User user = performance.getUsers();
 
@@ -95,6 +96,7 @@ public class PerformanceView extends ViewPart {
 	private DataBindingContext dbc = new DataBindingContext();
 
 	private ColumnLabelProvider nameLabelProvider;
+	private AsyncLabelProvider asyncDuringLabelProvider;
 	private ColumnLabelProvider statusLabelProvider;
 	private ColumnLabelProvider duringLabelProvider;
 
@@ -127,14 +129,15 @@ public class PerformanceView extends ViewPart {
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(mainGeneralTabControl);
 		mainTab.setControl(mainGeneralTabControl);
-		byDateTab.setControl(mainArchivelTabControl); 
-		
+		byDateTab.setControl(mainArchivelTabControl);
+
 		Composite mainFirstTabControl = new Composite(mainGeneralTabControl,
 				SWT.NONE);
 		GridDataFactory.fillDefaults().grab(false, false)
 				.applyTo(mainFirstTabControl);
 		addStartedTaskDescription(mainFirstTabControl);
-		DateChooser date = new DateChooser(mainFirstTabControl, SWT.NONE);
+		PerformanceCalendar date = new PerformanceCalendar(mainFirstTabControl,
+				SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(date);
 		Composite mainSecondTabControl = new Composite(mainArchivelTabControl,
 				SWT.NONE);
@@ -142,8 +145,8 @@ public class PerformanceView extends ViewPart {
 				.applyTo(mainSecondTabControl);
 		GridDataFactory.fillDefaults().grab(true, true)
 				.applyTo(mainSecondTabControl);
-		
-		createViewer(mainSecondTabControl);
+
+		createCommonViewer(mainSecondTabControl);
 		createButtons(mainSecondTabControl);
 		createActions();
 		createModelListener();
@@ -158,15 +161,16 @@ public class PerformanceView extends ViewPart {
 			@Override
 			public void modifyed() {
 				performanceTreeViewer.getControl().getDisplay()
-				.asyncExec(new Runnable() {
+						.asyncExec(new Runnable() {
 
-					@Override
-					public void run() {
+							@Override
+							public void run() {
 
-						setDescription();
-					}
-				});
+								setDescription();
+							}
+						});
 			};
+
 			@Override
 			public void taskModifyed(final Task task) {
 
@@ -196,7 +200,6 @@ public class PerformanceView extends ViewPart {
 
 			@Override
 			public void taskNameModifyed(final Task task, final String value) {
-				// TODO Auto-generated method stub
 
 				performanceTreeViewer.getControl().getDisplay()
 						.asyncExec(new Runnable() {
@@ -714,7 +717,49 @@ public class PerformanceView extends ViewPart {
 		return action;
 	}
 
-	private void createViewer(Composite parent) {
+	private void createTimeViewer(Composite parent) {
+		Composite composite = new Composite(parent, SWT.NONE);
+		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
+		TreeColumnLayout columnLayaut = new TreeColumnLayout();
+		composite.setLayout(columnLayaut);
+		byDateTreeViewer = new TreeViewer(composite, SWT.FULL_SELECTION);
+		TreeViewerColumn name = new TreeViewerColumn(byDateTreeViewer, SWT.LEFT);
+		byDateTreeViewer.getTree().setLinesVisible(true);
+		byDateTreeViewer.getTree().setHeaderVisible(true);
+		
+		name.getColumn().setText("Task");
+		columnLayaut.setColumnData(name.getColumn(), new ColumnWeightData(10));
+		
+		TreeViewerColumn during = new TreeViewerColumn(byDateTreeViewer, SWT.LEFT);
+		during.getColumn().setText("during");
+		columnLayaut.setColumnData(during.getColumn(), new ColumnWeightData(4));
+//		IObservableSet intervals = new ;
+		 asyncDuringLabelProvider = new AsyncLabelProvider(null, null){
+			
+		 };
+		during.setLabelProvider(asyncDuringLabelProvider);
+		
+		byDateTreeViewer.setInput(performance);
+		ViewerFilter[] filters = new ViewerFilter[1] ;
+		ViewerFilter filter = new ViewerFilter() {
+			
+			@Override
+			public boolean select(Viewer viewer, Object parentElement, Object element) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		};
+		filters[0] = filter;
+		byDateTreeViewer.setFilters(filters );
+		ObservableListTreeContentProvider contentProvider = new ObservableListTreeContentProvider(
+				new PerfomanceTreeFactoryImpl(), null);
+		contentProvider.getKnownElements();
+		byDateTreeViewer
+		.setContentProvider(contentProvider);
+
+	}
+
+	private void createCommonViewer(Composite parent) {
 
 		Composite composite = new Composite(parent, SWT.NONE);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(composite);
@@ -739,18 +784,13 @@ public class PerformanceView extends ViewPart {
 					return null;
 			}
 
-			@Override
-			public Image getImage(Object element) {
-
-				return super.getImage(element);
-			}
+			
 		};
 		name.setLabelProvider(nameLabelProvider);
 
 		TreeViewerColumn during = new TreeViewerColumn(performanceTreeViewer,
 				SWT.LEFT);
-		performanceTreeViewer.getTree().setLinesVisible(true);
-		performanceTreeViewer.getTree().setHeaderVisible(true);
+
 		during.getColumn().setText("During");
 		columnLayout.setColumnData(during.getColumn(), new ColumnWeightData(5));
 		duringLabelProvider = new ColumnLabelProvider() {
@@ -809,8 +849,7 @@ public class PerformanceView extends ViewPart {
 
 		TreeViewerColumn status = new TreeViewerColumn(performanceTreeViewer,
 				SWT.LEFT);
-		performanceTreeViewer.getTree().setLinesVisible(true);
-		performanceTreeViewer.getTree().setHeaderVisible(true);
+
 		status.getColumn().setText("Status");
 		columnLayout.setColumnData(status.getColumn(), new ColumnWeightData(1));
 		statusLabelProvider = new ColumnLabelProvider() {
@@ -880,7 +919,6 @@ public class PerformanceView extends ViewPart {
 						new PerfomanceTreeFactoryImpl(), null));
 
 		performanceTreeViewer.setInput(performance);
-
 	}
 
 	private void createTask(String name, String description) {

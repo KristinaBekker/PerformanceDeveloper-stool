@@ -4,6 +4,7 @@ package UserPerformance.impl;
 
 import UserPerformance.Interval;
 import UserPerformance.Parameters;
+import UserPerformance.Task;
 import UserPerformance.UserPerformancePackage;
 import java.util.Date;
 import org.eclipse.emf.common.notify.Notification;
@@ -23,7 +24,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link UserPerformance.impl.IntervalImpl#getStart <em>Start</em>}</li>
  *   <li>{@link UserPerformance.impl.IntervalImpl#getEnd <em>End</em>}</li>
  *   <li>{@link UserPerformance.impl.IntervalImpl#getParameter <em>Parameter</em>}</li>
- *   <li>{@link UserPerformance.impl.IntervalImpl#getNameTask <em>Name Task</em>}</li>
+ *   <li>{@link UserPerformance.impl.IntervalImpl#getTask <em>Task</em>}</li>
  * </ul>
  * </p>
  *
@@ -81,24 +82,14 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
 	protected Parameters parameter;
 
 	/**
-	 * The default value of the '{@link #getNameTask() <em>Name Task</em>}' attribute.
+	 * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getNameTask()
+	 * @see #getTask()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final String NAME_TASK_EDEFAULT = null;
-
-	/**
-	 * The cached value of the '{@link #getNameTask() <em>Name Task</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getNameTask()
-	 * @generated
-	 * @ordered
-	 */
-	protected String nameTask = NAME_TASK_EDEFAULT;
+	protected Task task;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -209,8 +200,16 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String getNameTask() {
-		return nameTask;
+	public Task getTask() {
+		if (task != null && task.eIsProxy()) {
+			InternalEObject oldTask = (InternalEObject)task;
+			task = (Task)eResolveProxy(oldTask);
+			if (task != oldTask) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, UserPerformancePackage.INTERVAL__TASK, oldTask, task));
+			}
+		}
+		return task;
 	}
 
 	/**
@@ -218,11 +217,20 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setNameTask(String newNameTask) {
-		String oldNameTask = nameTask;
-		nameTask = newNameTask;
+	public Task basicGetTask() {
+		return task;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setTask(Task newTask) {
+		Task oldTask = task;
+		task = newTask;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, UserPerformancePackage.INTERVAL__NAME_TASK, oldNameTask, nameTask));
+			eNotify(new ENotificationImpl(this, Notification.SET, UserPerformancePackage.INTERVAL__TASK, oldTask, task));
 	}
 
 	/**
@@ -253,8 +261,9 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
 				return getEnd();
 			case UserPerformancePackage.INTERVAL__PARAMETER:
 				return getParameter();
-			case UserPerformancePackage.INTERVAL__NAME_TASK:
-				return getNameTask();
+			case UserPerformancePackage.INTERVAL__TASK:
+				if (resolve) return getTask();
+				return basicGetTask();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -276,8 +285,8 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
 			case UserPerformancePackage.INTERVAL__PARAMETER:
 				setParameter((Parameters)newValue);
 				return;
-			case UserPerformancePackage.INTERVAL__NAME_TASK:
-				setNameTask((String)newValue);
+			case UserPerformancePackage.INTERVAL__TASK:
+				setTask((Task)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -300,8 +309,8 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
 			case UserPerformancePackage.INTERVAL__PARAMETER:
 				setParameter((Parameters)null);
 				return;
-			case UserPerformancePackage.INTERVAL__NAME_TASK:
-				setNameTask(NAME_TASK_EDEFAULT);
+			case UserPerformancePackage.INTERVAL__TASK:
+				setTask((Task)null);
 				return;
 		}
 		super.eUnset(featureID);
@@ -321,8 +330,8 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
 				return END_EDEFAULT == null ? end != null : !END_EDEFAULT.equals(end);
 			case UserPerformancePackage.INTERVAL__PARAMETER:
 				return parameter != null;
-			case UserPerformancePackage.INTERVAL__NAME_TASK:
-				return NAME_TASK_EDEFAULT == null ? nameTask != null : !NAME_TASK_EDEFAULT.equals(nameTask);
+			case UserPerformancePackage.INTERVAL__TASK:
+				return task != null;
 		}
 		return super.eIsSet(featureID);
 	}
@@ -341,8 +350,6 @@ public class IntervalImpl extends MinimalEObjectImpl.Container implements Interv
 		result.append(start);
 		result.append(", end: ");
 		result.append(end);
-		result.append(", nameTask: ");
-		result.append(nameTask);
 		result.append(')');
 		return result.toString();
 	}

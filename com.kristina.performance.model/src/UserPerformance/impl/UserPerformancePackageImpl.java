@@ -411,8 +411,8 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getInterval_NameTask() {
-		return (EAttribute)intervalEClass.getEStructuralFeatures().get(3);
+	public EReference getInterval_Task() {
+		return (EReference)intervalEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -496,7 +496,7 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 		createEAttribute(intervalEClass, INTERVAL__START);
 		createEAttribute(intervalEClass, INTERVAL__END);
 		createEReference(intervalEClass, INTERVAL__PARAMETER);
-		createEAttribute(intervalEClass, INTERVAL__NAME_TASK);
+		createEReference(intervalEClass, INTERVAL__TASK);
 
 		performanceEClass = createEClass(PERFORMANCE);
 		createEReference(performanceEClass, PERFORMANCE__USERS);
@@ -567,7 +567,7 @@ public class UserPerformancePackageImpl extends EPackageImpl implements UserPerf
 		initEAttribute(getInterval_Start(), ecorePackage.getEDate(), "start", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getInterval_End(), ecorePackage.getEDate(), "end", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getInterval_Parameter(), this.getParameters(), null, "parameter", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getInterval_NameTask(), ecorePackage.getEString(), "nameTask", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getInterval_Task(), this.getTask(), null, "task", null, 0, 1, Interval.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(performanceEClass, Performance.class, "Performance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getPerformance_Users(), this.getUser(), null, "Users", null, 0, 1, Performance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

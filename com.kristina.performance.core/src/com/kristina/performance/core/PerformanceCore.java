@@ -26,7 +26,7 @@ public class PerformanceCore {
 	private Date currentTimeInterval;
 	private Date startTimeInterval;
 	private Interval interval;
-	private String name;
+
 
 	public PerformanceCore(final Performance performance) {
 		startTimeInterval = Calendar.getInstance().getTime();
@@ -128,14 +128,15 @@ public class PerformanceCore {
 
 	private void addInterval(User user) {
 	//	Task startedTask = UserPerformanceFactory.eINSTANCE.createTask();
-		String name = "Common";
+		Task  taskInInterval = UserPerformanceFactory.eINSTANCE.createTask();
+		taskInInterval.setName("Common");
 		long during = (currentTimeInterval.getTime() - startTimeInterval
 				 .getTime()) / 1000 ;
 		if (!user.getTasks().isEmpty()) {
 			for (Task task : user.getTasks()) {
 				if(task.getStatus().equals(START)){
 					Task startedTask = searchStartedTask(task, during);
-					name = startedTask.getName();
+					taskInInterval = startedTask;
 				break;
 				}
 			}
@@ -143,7 +144,7 @@ public class PerformanceCore {
 	
 	user.getParameters().setTimeActive( user.getParameters().getTimeActive() + during );
 			 interval.getParameter().setTimeActive(during);
-			 interval.setNameTask(name);
+			 interval.setTask(taskInInterval);
 			 interval.setEnd(currentTimeInterval);
 			 interval.setStart(startTimeInterval);
 			 user.getIntervals().add(interval);

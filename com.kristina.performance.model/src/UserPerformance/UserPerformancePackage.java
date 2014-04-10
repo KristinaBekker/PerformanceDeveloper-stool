@@ -403,13 +403,13 @@ public interface UserPerformancePackage extends EPackage {
 	int INTERVAL__PARAMETER = 2;
 
 	/**
-	 * The feature id for the '<em><b>Name Task</b></em>' attribute.
+	 * The feature id for the '<em><b>Task</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int INTERVAL__NAME_TASK = 3;
+	int INTERVAL__TASK = 3;
 
 	/**
 	 * The number of structural features of the '<em>Interval</em>' class.
@@ -816,15 +816,15 @@ public interface UserPerformancePackage extends EPackage {
 	EReference getInterval_Parameter();
 
 	/**
-	 * Returns the meta object for the attribute '{@link UserPerformance.Interval#getNameTask <em>Name Task</em>}'.
+	 * Returns the meta object for the reference '{@link UserPerformance.Interval#getTask <em>Task</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Name Task</em>'.
-	 * @see UserPerformance.Interval#getNameTask()
+	 * @return the meta object for the reference '<em>Task</em>'.
+	 * @see UserPerformance.Interval#getTask()
 	 * @see #getInterval()
 	 * @generated
 	 */
-	EAttribute getInterval_NameTask();
+	EReference getInterval_Task();
 
 	/**
 	 * Returns the meta object for class '{@link UserPerformance.Performance <em>Performance</em>}'.
@@ -1135,12 +1135,12 @@ public interface UserPerformancePackage extends EPackage {
 		EReference INTERVAL__PARAMETER = eINSTANCE.getInterval_Parameter();
 
 		/**
-		 * The meta object literal for the '<em><b>Name Task</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Task</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute INTERVAL__NAME_TASK = eINSTANCE.getInterval_NameTask();
+		EReference INTERVAL__TASK = eINSTANCE.getInterval_Task();
 
 		/**
 		 * The meta object literal for the '{@link UserPerformance.impl.PerformanceImpl <em>Performance</em>}' class.

@@ -17,7 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link UserPerformance.Interval#getStart <em>Start</em>}</li>
  *   <li>{@link UserPerformance.Interval#getEnd <em>End</em>}</li>
  *   <li>{@link UserPerformance.Interval#getParameter <em>Parameter</em>}</li>
- *   <li>{@link UserPerformance.Interval#getNameTask <em>Name Task</em>}</li>
+ *   <li>{@link UserPerformance.Interval#getTask <em>Task</em>}</li>
  * </ul>
  * </p>
  *
@@ -105,29 +105,29 @@ public interface Interval extends EObject {
 	void setParameter(Parameters value);
 
 	/**
-	 * Returns the value of the '<em><b>Name Task</b></em>' attribute.
+	 * Returns the value of the '<em><b>Task</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Name Task</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Task</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Name Task</em>' attribute.
-	 * @see #setNameTask(String)
-	 * @see UserPerformance.UserPerformancePackage#getInterval_NameTask()
+	 * @return the value of the '<em>Task</em>' reference.
+	 * @see #setTask(Task)
+	 * @see UserPerformance.UserPerformancePackage#getInterval_Task()
 	 * @model
 	 * @generated
 	 */
-	String getNameTask();
+	Task getTask();
 
 	/**
-	 * Sets the value of the '{@link UserPerformance.Interval#getNameTask <em>Name Task</em>}' attribute.
+	 * Sets the value of the '{@link UserPerformance.Interval#getTask <em>Task</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Name Task</em>' attribute.
-	 * @see #getNameTask()
+	 * @param value the new value of the '<em>Task</em>' reference.
+	 * @see #getTask()
 	 * @generated
 	 */
-	void setNameTask(String value);
+	void setTask(Task value);
 
 } // Interval
