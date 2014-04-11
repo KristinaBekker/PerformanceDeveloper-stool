@@ -775,10 +775,10 @@ public class PerformanceView extends ViewPart {
 		// columnLayaut.setColumnData(name.getColumn(), new
 		// ColumnWeightData(10));
 
-//		TreeViewerColumn during = new TreeViewerColumn(byDateTreeViewer,
-//				SWT.LEFT);
-//		during.getColumn().setText("during");
-//		columnLayaut.setColumnData(during.getColumn(), new ColumnWeightData(4));
+		TreeViewerColumn during = new TreeViewerColumn(byDateTreeViewer,
+				SWT.LEFT);
+		during.getColumn().setText("during");
+		columnLayaut.setColumnData(during.getColumn(), new ColumnWeightData(4));
 
 		IObservableSet intervals = new ComputedSet() {
 
@@ -788,8 +788,9 @@ public class PerformanceView extends ViewPart {
 
 				HashSet<Interval> set = new HashSet<Interval>();
 				for (Interval i : interv) {
+					set.add(i);
 					if (startValue.getValue() == stopValue.getValue()) {
-						set.add(i);
+					set.add(i);
 					}
 				}
 				return set;
@@ -800,7 +801,7 @@ public class PerformanceView extends ViewPart {
 		asyncDuringLabelProvider = new AsyncLabelProvider(intervals) {
 
 		};
-//		during.setLabelProvider(asyncDuringLabelProvider);
+		during.setLabelProvider(asyncDuringLabelProvider);
 
 		// ViewerFilter[] filters = new ViewerFilter[1] ;
 		// ViewerFilter filter = new ViewerFilter() {
@@ -1142,8 +1143,8 @@ public class PerformanceView extends ViewPart {
 	}
 
 	private static void setButtonDimensionHint(Button button) {
-		Assert.isNotNull(button);
 		Object gd = button.getLayoutData();
+		Assert.isNotNull(button);
 		if (gd instanceof GridData) {
 			((GridData) gd).widthHint = getButtonWidthHint(button);
 			((GridData) gd).horizontalAlignment = GridData.FILL;

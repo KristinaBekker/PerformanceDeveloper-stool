@@ -59,9 +59,9 @@ public class AsyncLabelProvider extends ColumnLabelProvider {
 			final Set<EObject> tasks = new HashSet<EObject>(cache.keySet());
 			for (EObject task : tasks) {
 
-								Set tasksFromIntervals = null;
+//								Set tasksFromIntervals = null;
 				if (!taskFromIntervals.contains(task))
-					cache.put((EObject) taskFromIntervals, calcProcedure(task));
+					cache.put((EObject) tasks, calcProcedure(task));
 			}
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
