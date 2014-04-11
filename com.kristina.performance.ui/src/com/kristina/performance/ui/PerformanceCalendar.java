@@ -1,12 +1,21 @@
 package com.kristina.performance.ui;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import org.eclipse.nebula.widgets.datechooser.DateChooser;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.widgets.Composite;
 
-public class PerformanceCalendar extends DateChooser {
+import com.kristina.performance.core.IUserPerformanceModelLister;
 
+public class PerformanceCalendar extends DateChooser {
+	public Date start;
+	public Date end;
+	public List<ICalendarListener> calendarListeners = new ArrayList<>();
 	public PerformanceCalendar(Composite parent, int style) {
 
 		super(parent, style);
@@ -14,7 +23,12 @@ public class PerformanceCalendar extends DateChooser {
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				calculationByDate();
+				
+				for (ICalendarListener listener : calendarListeners) {
+                      start = Calendar.getInstance().getTime();
+                     end = Calendar.getInstance().getTime();
+					listener.setValue(start,end);
+				}
 
 			}
 
@@ -37,10 +51,7 @@ public class PerformanceCalendar extends DateChooser {
 
 	}
 
-	private void calculationByDate() {
-		System.err.println(df1.format(currentMonthCal.getTime()));
 
-	}
 	
 
 

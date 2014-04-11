@@ -1,10 +1,16 @@
 package com.kristina.performance.ui;
 
 import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.observable.set.ComputedSet;
+import org.eclipse.core.databinding.observable.set.IObservableSet;
 import org.eclipse.core.databinding.observable.value.ComputedValue;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.observable.value.WritableValue;
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -31,8 +37,6 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TextCellEditor;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
@@ -56,6 +60,7 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import UserPerformance.Interval;
 import UserPerformance.Parameters;
 import UserPerformance.Performance;
 import UserPerformance.Task;
@@ -79,10 +84,18 @@ public class PerformanceView extends ViewPart {
 	private Action pausevePerformanceAction;
 	private Action stopPerformanceAction;
 
+	private Date start = Calendar.getInstance().getTime();
+	private Date end = Calendar.getInstance().getTime();
+	private IObservableValue stopValue = new WritableValue(start, Boolean.TYPE);
+	private IObservableValue startValue = new WritableValue(start, null);
+	
+
 	private TreeViewer performanceTreeViewer;
 	private TreeViewer byDateTreeViewer;
 
 	private User user = performance.getUsers();
+
+
 
 	private Text taskName;
 	private Text taskDescription;
@@ -111,6 +124,7 @@ public class PerformanceView extends ViewPart {
 
 	public void createPartControl(Composite parent) {
 
+		
 		GridLayoutFactory.fillDefaults().numColumns(1).applyTo(parent);
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(parent);
 		TabFolder composite = new TabFolder(parent, SWT.NONE);
@@ -136,8 +150,37 @@ public class PerformanceView extends ViewPart {
 		GridDataFactory.fillDefaults().grab(false, false)
 				.applyTo(mainFirstTabControl);
 		addStartedTaskDescription(mainFirstTabControl);
-		PerformanceCalendar date = new PerformanceCalendar(mainFirstTabControl,
-				SWT.NONE);
+		createTimeViewer(mainFirstTabControl);
+		final PerformanceCalendar date = new PerformanceCalendar(
+				mainFirstTabControl, SWT.NONE);
+		final ICalendarListener listener = new ICalendarListener() {
+
+			@Override
+			public void setValue(final Date start, final Date end) {
+				performanceTreeViewer.getControl().getDisplay()
+						.asyncExec(new Runnable() {
+
+							@Override
+							public void run() {
+								setStart(start);
+								setEnd(end);
+
+							}
+						});
+
+			}
+		};
+		date.calendarListeners.add(listener);
+
+		date.addDisposeListener(new DisposeListener() {
+
+			@Override
+			public void widgetDisposed(DisposeEvent e) {
+				date.calendarListeners.remove(listener);
+			}
+		});
+		;
+
 		GridDataFactory.fillDefaults().grab(true, true).applyTo(date);
 		Composite mainSecondTabControl = new Composite(mainArchivelTabControl,
 				SWT.NONE);
@@ -723,39 +766,59 @@ public class PerformanceView extends ViewPart {
 		TreeColumnLayout columnLayaut = new TreeColumnLayout();
 		composite.setLayout(columnLayaut);
 		byDateTreeViewer = new TreeViewer(composite, SWT.FULL_SELECTION);
-		TreeViewerColumn name = new TreeViewerColumn(byDateTreeViewer, SWT.LEFT);
+		// TreeViewerColumn name = new TreeViewerColumn(byDateTreeViewer,
+		// SWT.LEFT);
 		byDateTreeViewer.getTree().setLinesVisible(true);
 		byDateTreeViewer.getTree().setHeaderVisible(true);
-		
-		name.getColumn().setText("Task");
-		columnLayaut.setColumnData(name.getColumn(), new ColumnWeightData(10));
-		
-		TreeViewerColumn during = new TreeViewerColumn(byDateTreeViewer, SWT.LEFT);
-		during.getColumn().setText("during");
-		columnLayaut.setColumnData(during.getColumn(), new ColumnWeightData(4));
-//		IObservableSet intervals = new ;
-		 asyncDuringLabelProvider = new AsyncLabelProvider(null, null){
-			
-		 };
-		during.setLabelProvider(asyncDuringLabelProvider);
-		
-		byDateTreeViewer.setInput(performance);
-		ViewerFilter[] filters = new ViewerFilter[1] ;
-		ViewerFilter filter = new ViewerFilter() {
-			
+
+		// name.getColumn().setText("Task");
+		// columnLayaut.setColumnData(name.getColumn(), new
+		// ColumnWeightData(10));
+
+//		TreeViewerColumn during = new TreeViewerColumn(byDateTreeViewer,
+//				SWT.LEFT);
+//		during.getColumn().setText("during");
+//		columnLayaut.setColumnData(during.getColumn(), new ColumnWeightData(4));
+
+		IObservableSet intervals = new ComputedSet() {
+
 			@Override
-			public boolean select(Viewer viewer, Object parentElement, Object element) {
-				// TODO Auto-generated method stub
-				return false;
+			protected Set calculate() {
+				EList<Interval> interv = user.getIntervals();
+
+				HashSet<Interval> set = new HashSet<Interval>();
+				for (Interval i : interv) {
+					if (startValue.getValue() == stopValue.getValue()) {
+						set.add(i);
+					}
+				}
+				return set;
 			}
 		};
-		filters[0] = filter;
-		byDateTreeViewer.setFilters(filters );
+		
+		
+		asyncDuringLabelProvider = new AsyncLabelProvider(intervals) {
+
+		};
+//		during.setLabelProvider(asyncDuringLabelProvider);
+
+		// ViewerFilter[] filters = new ViewerFilter[1] ;
+		// ViewerFilter filter = new ViewerFilter() {
+		//
+		// @Override
+		// public boolean select(Viewer viewer, Object parentElement, Object
+		// element) {
+		// // TODO Auto-generated method stub
+		// return false;
+		// }
+		// };
+		// filters[0] = filter;
+		// byDateTreeViewer.setFilters(filters );
 		ObservableListTreeContentProvider contentProvider = new ObservableListTreeContentProvider(
 				new PerfomanceTreeFactoryImpl(), null);
 		contentProvider.getKnownElements();
-		byDateTreeViewer
-		.setContentProvider(contentProvider);
+		byDateTreeViewer.setContentProvider(contentProvider);
+		byDateTreeViewer.setInput(performance);
 
 	}
 
@@ -781,10 +844,9 @@ public class PerformanceView extends ViewPart {
 				} else if (element instanceof Task) {
 					return ((Task) element).getName();
 				} else
-					return null;
+					return "";
 			}
 
-			
 		};
 		name.setLabelProvider(nameLabelProvider);
 
@@ -1098,6 +1160,7 @@ public class PerformanceView extends ViewPart {
 	}
 
 	private void up() {
+
 		for (Object item : ((IStructuredSelection) performanceTreeViewer
 				.getSelection()).toArray()) {
 			if (item instanceof Task) {
@@ -1282,5 +1345,15 @@ public class PerformanceView extends ViewPart {
 
 			return task;
 		}
+	}
+
+	public void setStart(Date start) {
+		this.start = start;
+		startValue.getValue();
+		System.err.println("");
+	}
+
+	public void setEnd(Date end) {
+		this.end = end;
 	}
 }
