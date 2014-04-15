@@ -144,7 +144,10 @@ public class PerformanceView extends ViewPart {
 				.applyTo(mainGeneralTabControl);
 		mainTab.setControl(mainGeneralTabControl);
 		byDateTab.setControl(mainArchivelTabControl);
-
+		start = Calendar.getInstance().getTime();
+		  end = Calendar.getInstance().getTime();
+		 stopValue = new WritableValue(start, Boolean.TYPE);
+	 startValue = new WritableValue(start, null);
 		Composite mainFirstTabControl = new Composite(mainGeneralTabControl,
 				SWT.NONE);
 		GridDataFactory.fillDefaults().grab(false, false)
@@ -784,14 +787,14 @@ public class PerformanceView extends ViewPart {
 
 			@Override
 			protected Set calculate() {
+				Object t = startValue.getValue();
+				Object d = stopValue.getValue();
 				EList<Interval> interv = user.getIntervals();
 
 				HashSet<Interval> set = new HashSet<Interval>();
 				for (Interval i : interv) {
 					set.add(i);
-					if (startValue.getValue() == stopValue.getValue()) {
-					set.add(i);
-					}
+					
 				}
 				return set;
 			}
